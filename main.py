@@ -1,14 +1,10 @@
 from tkinter import *
 import webbrowser
 
-# def open_entry():
-#     """Opens the text written by user"""
-#     webbrowser.open("myJournal.txt")
-
 def read_entry():
+    """Opens the text written by user"""
+    webbrowser.open("myJournal.txt")
 
-    with open("myJournal.txt", "r") as f:
-        print(f.read())
 
 def log_entry():
     journal_entry = textbox.get()
