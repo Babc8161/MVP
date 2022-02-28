@@ -3,10 +3,13 @@ import webbrowser
 
 def read_entry():
     """Opens the text written by user"""
+    
     webbrowser.open("sample.txt")
 
 
 def log_entry():
+    """Write an entry into the journal"""
+    
     journal_entry = textbox.get()
     journal_entry = journal_entry + "\n"
     textbox.delete(0, END)
