@@ -3,14 +3,14 @@ import webbrowser
 
 def read_entry():
     """Opens the text written by user"""
-    webbrowser.open("myJournal.txt")
+    webbrowser.open("sample.txt")
 
 
 def log_entry():
     journal_entry = textbox.get()
     journal_entry = journal_entry + "\n"
     textbox.delete(0, END)
-    with open("myJournal.txt", "a") as o:
+    with open("sample.txt", "a") as o:
         o.write(journal_entry)
 
 def exit():
