@@ -1,47 +1,61 @@
 from tkinter import *
-import webbrowser
-
-def open_entry():
-    webbrowser.open("sample.txt")
-
-def read_entry():
-    with open("sample.txt", "r") as f:
-        print(f.read())
-
-def log_entry():
-    journal_entry = textbox.get()
-    journal_entry = journal_entry + "\n"
-    textbox.delete(0, END)
-    with open("sample.txt", "a") as o:
-        o.write(journal_entry)
-
-
-
-def exit():
-    root.destroy()
+import requests
 
 root = Tk()
 root.geometry("500x400")
 root.title("myJournal")
 
-menubar = Menu(root)
+def savefile():
+    with open("myJournal.txt", "w") as o:
+        if o is None:
+            return
+        text = str(entry.get(1.0,END))
+        o.write(text)
 
-filemenu1 = Menu(menubar, tearoff=0)
+
+def read_entries():
+    with open("myJournal.txt", "r") as f:
+        if f is not None:
+            content = f.read()
+    entry.insert(INSERT, content)
 
 
-filemenu1.add_command(label="Past Entries", command=open_entry)
-filemenu1.add_command(label="Quit", command=exit)
+def binance():
+    with open("myJournal.txt", "w+") as o:
+        url = 'https://thawing-mountain-55789.herokuapp.com/api/binance/realtime'
+        r = requests.get(url, params={"bid": "ask"})
+        o.write(str(r.text) + "\n" + "\n")
+
+def coinbase():
+    with open("myJournal.txt", "w+") as o:
+        url = 'https://thawing-mountain-55789.herokuapp.com/api/coinbase/realtime'
+        r = requests.get(url, params={"bid": "ask"})
+        o.write(str(r.text) + "\n" + "\n")
+
+def kraken():
+    with open("myJournal.txt", "w+") as o:
+        url = 'https://thawing-mountain-55789.herokuapp.com/api/kraken/realtime'
+        r = requests.get(url, params={"bid": "ask"})
+        o.write(str(r.text) + "\n" + "\n")
 
 
-menubar.add_cascade(label="File", menu=filemenu1)
-root.config(menu=menubar)
+bsavefile=Button(root, text="Save", command=savefile)
+bsavefile.place(x=450, y=10)
 
-journal = Label(root, text="Log an Entry")
-journal.pack()
-textbox = Entry(root, bd=5, width=80)
-textbox.pack()
-save = Button(text="Save", command=log_entry)
-save.pack()
+bopenfile=Button(root, text="Read Entries", command=read_entries)
+bopenfile.place(x=10, y=10)
+
+bbinance=Button(root, text="Get Binance", command=binance)
+bbinance.place(x=130, y=10)
+
+bcoinbase=Button(root, text="Get Coinbase", command=coinbase)
+bcoinbase.place(x=210, y=10)
+
+bkraken=Button(root, text="Get Kraken", command=kraken)
+bkraken.place(x=295, y=10)
+
+entry = Text(root, height=60, width=60, wrap=WORD)
+entry.place(x=10, y=50)
+
 
 root.mainloop()
-
